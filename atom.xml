@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://kumassy.github.io/atom.xml" rel="self"/>
   <link href="http://kumassy.github.io/"/>
-  <updated>2016-03-10T21:23:50+09:00</updated>
+  <updated>2016-03-10T21:43:58+09:00</updated>
   <id>http://kumassy.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -14,15 +14,14 @@
 
   
   <entry>
-    <title type="html"><![CDATA[test]]></title>
-    <link href="http://kumassy.github.io/blog/2016/03/10/test/"/>
-    <updated>2016-03-10T19:05:04+09:00</updated>
-    <id>http://kumassy.github.io/blog/2016/03/10/test</id>
-    <content type="html"><![CDATA[<h1>test</h1>
+    <title type="html"><![CDATA[ブログ移行作業中です]]></title>
+    <link href="http://kumassy.github.io/blog/2016/03/10/buroguyi-xing-zuo-ye-zhong-desu/"/>
+    <updated>2016-03-10T21:29:09+09:00</updated>
+    <id>http://kumassy.github.io/blog/2016/03/10/buroguyi-xing-zuo-ye-zhong-desu</id>
+    <content type="html"><![CDATA[<h1>いきさつ</h1>
 
-<h2>test2</h2>
-
-<h3>test3</h3>
+<p>今まで某サーバーを借りてブログを（一応）やっていた わけですが、コスト削減のためGitHub + Octopress 環境へ移行することになりました。
+コンテンツ自体の移行作業はまたおいおいやっていきます。。。</p>
 ]]></content>
   </entry>
   
