@@ -1,0 +1,59 @@
+// @import url(http://fonts.googleapis.com/earlyaccess/notosansjp.css);
+// @import url(http://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
+// @import 'https://fonts.googleapis.com/css?family=Open+Sans:400,700|Roboto|Roboto+Condensed';
+@import 'https://fonts.googleapis.com/css?family=Roboto:400,700';
+
+@import url("../node_modules/sanitize.css/sanitize.css");
+body{
+	color: #333;
+	/*font-family: "メイリオ", sans-serif;*/
+	/*font-family: 'Noto Sans JP', sans-serif;*/
+	/*font-family: 'Open Sans', 'Noto Sans Japanese', sans-serif;*/
+	font-family: 'Roboto', 'Noto Sans Japanese', sans-serif;
+}
+#chatroom{
+	max-width: 600px;
+	margin: 0 auto;
+
+	h2{
+		span.highlight{
+			color: skyblue;
+		}
+	}
+
+	ul{
+		list-style: none;
+		padding: 0;
+		.item{
+			position: relative;
+			padding-bottom: 24px;
+
+
+			.message_icon{
+				position: absolute;
+			  top: 0;
+			  left: 0;
+				width: 72px;
+
+				img{
+					width: 64px;
+					height: 64px;
+				}
+			}
+			.message_content{
+				margin-left: 72px;
+
+				.name{
+					font-size: 14px;
+					font-weight: bold;
+				}
+				.message{
+					font-size: 16px;
+				}
+				.timestamp{
+					font-size: 12px;
+				}
+			}
+		}
+	}
+}

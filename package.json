@@ -1,0 +1,31 @@
+{
+  "name": "kumassy.github.io",
+  "version": "0.0.1",
+  "description": "Kumassy Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kumassy/Kumassy.github.io.git"
+  },
+  "author": "Kumassy",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/Kumassy/Kumassy.github.io/issues"
+  },
+  "homepage": "https://github.com/Kumassy/Kumassy.github.io#readme",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "sanitize.css": "^4.1.0"
+  },
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-preset-es2015": "^6.14.0",
+    "browser-sync": "^2.16.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-plumber": "^1.1.0",
+    "gulp-ruby-sass": "^2.1.0"
+  }
+}

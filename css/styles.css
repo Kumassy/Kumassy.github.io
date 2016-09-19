@@ -1,0 +1,49 @@
+@charset "UTF-8";
+@import "https://fonts.googleapis.com/css?family=Roboto:400,700";
+@import url("../node_modules/sanitize.css/sanitize.css");
+body {
+  color: #333;
+  /*font-family: "メイリオ", sans-serif;*/
+  /*font-family: 'Noto Sans JP', sans-serif;*/
+  /*font-family: 'Open Sans', 'Noto Sans Japanese', sans-serif;*/
+  font-family: 'Roboto', 'Noto Sans Japanese', sans-serif;
+}
+
+#chatroom {
+  max-width: 600px;
+  margin: 0 auto;
+}
+#chatroom h2 span.highlight {
+  color: skyblue;
+}
+#chatroom ul {
+  list-style: none;
+  padding: 0;
+}
+#chatroom ul .item {
+  position: relative;
+  padding-bottom: 24px;
+}
+#chatroom ul .item .message_icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 72px;
+}
+#chatroom ul .item .message_icon img {
+  width: 64px;
+  height: 64px;
+}
+#chatroom ul .item .message_content {
+  margin-left: 72px;
+}
+#chatroom ul .item .message_content .name {
+  font-size: 14px;
+  font-weight: bold;
+}
+#chatroom ul .item .message_content .message {
+  font-size: 16px;
+}
+#chatroom ul .item .message_content .timestamp {
+  font-size: 12px;
+}
