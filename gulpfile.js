@@ -50,7 +50,7 @@ gulp.task('sass', function () {
 gulp.task('js', function() {
   gulp.src('_js/**/*.js') // 読み込むファイル
     .pipe(babel()) // babelを実行
-    .pipe(gulp.dest('js')) // 出力先
+    .pipe(gulp.dest('js/')); // 出力先
 });
 
 
@@ -59,6 +59,7 @@ gulp.task('js', function() {
 /* htmlファイルはhtmlとして正しい形式（タグ）が入っていないと動作しないので注意 */
 gulp.task('watch', function() {
   gulp.watch(SCSS.src, ['sass']);
+  gulp.watch('_js/**/*.js', ['js']);
   gulp.watch(reloadWatchPaths).on('change', browserSync.reload);
 });
 
