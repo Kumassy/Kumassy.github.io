@@ -1,6 +1,13 @@
 @charset "UTF-8";
-@import "https://fonts.googleapis.com/css?family=Roboto:400,700";
-@import url("../node_modules/sanitize.css/sanitize.css");
+@import "https://fonts.googleapis.com/css?family=Roboto:400,400i,700";
+span.highlight {
+  color: #00b8e6;
+}
+
+i {
+  font-style: italic;
+}
+
 body {
   color: #333;
   /*font-family: "メイリオ", sans-serif;*/
@@ -10,13 +17,26 @@ body {
   height: 100%;
 }
 
+header {
+  min-height: 240px;
+  background-image: url("../top.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: left center;
+  position: relative;
+}
+header h1 {
+  position: absolute;
+  margin: 0;
+  right: 48px;
+  bottom: 24px;
+  color: #eee;
+}
+
 #chatroom {
   max-width: 600px;
   padding: 0 24px;
   margin: 0 auto;
-}
-#chatroom h2 span.highlight {
-  color: skyblue;
 }
 #chatroom ul {
   list-style: none;
@@ -68,4 +88,46 @@ body {
   border: 2px solid #E0E0E0;
   border-radius: 0 4px 4px 0;
   border-left: none;
+}
+
+#suyaa {
+  max-width: 600px;
+  padding: 0 24px;
+  margin: 0 auto;
+}
+
+#social {
+  max-width: 600px;
+  padding: 0 24px;
+  margin: 0 auto;
+  padding-bottom: 24px;
+}
+#social ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+#social ul li.item {
+  border: 2px solid #E0E0E0;
+  border-radius: 4px;
+}
+#social ul li.item a {
+  display: block;
+  padding: 8px 32px;
+  width: 100%;
+  height: 100%;
+  color: #333;
+  text-decoration: none;
+}
+#social ul li.item i.fa {
+  padding-right: 4px;
+}
+
+footer {
+  background-color: #555;
+  height: 8px;
+  width: 100%;
 }

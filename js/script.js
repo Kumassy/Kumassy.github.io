@@ -1,7 +1,7 @@
 "use strict";
 
 function insert_message(img_src, name, message) {
-  var div = "\n    <li class=\"item\">\n      <div class=\"message_icon\">\n        <img class=\"avatar\" src=\"./" + img_src + "\">\n      </div>\n      <div class=\"message_content\">\n        <div class=\"name\">" + name + "</div>\n        <div class=\"message\">" + message + "</div>\n        <div class=\"timestamp\">" + new Date().toLocaleDateString('ja-JP', { hour: "2-digit", minute: "2-digit", second: "2-digit" }) + "</div>\n      </div>\n    </li>\n  ";
+  var div = "\n    <li class=\"item\">\n      <div class=\"message_icon\">\n        <img class=\"avatar\" src=\"./" + img_src + "\">\n      </div>\n      <div class=\"message_content\">\n        <div class=\"name\">" + name + "</div>\n        <div class=\"message\">" + message + "</div>\n        <div class=\"timestamp\">" + new Date().toLocaleDateString('ja-JP', { hour: "2-digit", minute: "2-digit" }) + "</div>\n      </div>\n    </li>\n  ";
   var message_list = document.querySelector('#chatroom ul');
   message_list.insertAdjacentHTML('beforeend', div);
 

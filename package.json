@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Kumassy/Kumassy.github.io#readme",
   "dependencies": {
+    "font-awesome": "^4.6.3",
     "gulp": "^3.9.1",
     "sanitize.css": "^4.1.0"
   },
