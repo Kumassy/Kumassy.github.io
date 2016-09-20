@@ -25,7 +25,13 @@ body{
 	height: 100%;
 }
 header{
-	min-height: 240px;
+	height: 240px;
+	@media screen and (max-width: 600px) {
+		height: 200px;
+	}
+	@media screen and (max-width: 600px) {
+		height: 180px;
+	}
 	background-image: url("../top.jpg");
 	// background-size:100% auto;
 	background-size: cover;
