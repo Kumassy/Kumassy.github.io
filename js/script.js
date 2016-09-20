@@ -23,7 +23,7 @@ function resister_reply(message) {
   }, 1000);
 }
 
-var textarea = document.querySelector('textarea');
+var textarea = document.querySelector('.inputfield textarea');
 textarea.addEventListener('keydown', function (e) {
   // Do your key combination detection
   if (e.keyCode === 13) {
@@ -34,9 +34,22 @@ textarea.addEventListener('keydown', function (e) {
       return;
     }
 
-    insert_message('kumassy-icon.jpg', 'Kumassy', text);
+    insert_message('you-icon.jpg', 'You', text);
     textarea.value = "";
     event.preventDefault(); // Don't insert '\n' by press down return key
     resister_reply(text);
   }
+}, false);
+document.querySelector('.inputfield button').addEventListener('click', function (e) {
+  var text = textarea.value;
+
+  if (!text) {
+    e.preventDefault();
+    return;
+  }
+
+  insert_message('you-icon.jpg', 'You', text);
+  textarea.value = "";
+  event.preventDefault(); // Don't insert '\n' by press down return key
+  resister_reply(text);
 }, false);

@@ -7,7 +7,7 @@ function insert_message(img_src, name, message){
       <div class="message_content">
         <div class="name">${name}</div>
         <div class="message">${message}</div>
-        <div class="timestamp">${new Date().toLocaleDateString('ja-JP',{hour: "2-digit", minute: "2-digit", second: "2-digit"})}</div>
+        <div class="timestamp">${new Date().toLocaleDateString('ja-JP',{hour: "2-digit", minute: "2-digit"})}</div>
       </div>
     </li>
   `;
@@ -34,7 +34,7 @@ function resister_reply(message){
 
 }
 
-const textarea = document.querySelector('textarea');
+const textarea = document.querySelector('.inputfield textarea');
 textarea.addEventListener('keydown', function (e){
     // Do your key combination detection
     if(e.keyCode === 13){
@@ -45,9 +45,22 @@ textarea.addEventListener('keydown', function (e){
         return;
       }
 
-      insert_message('kumassy-icon.jpg', 'Kumassy', text);
+      insert_message('you-icon.jpg', 'You', text);
       textarea.value = "";
       event.preventDefault(); // Don't insert '\n' by press down return key
       resister_reply(text);
     }
 }, false);
+document.querySelector('.inputfield button').addEventListener('click', function(e){
+  const text = textarea.value
+
+  if(!text){
+    e.preventDefault();
+    return;
+  }
+
+  insert_message('you-icon.jpg', 'You', text);
+  textarea.value = "";
+  event.preventDefault(); // Don't insert '\n' by press down return key
+  resister_reply(text);
+},false);

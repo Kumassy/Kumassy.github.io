@@ -12,6 +12,7 @@ body {
 
 #chatroom {
   max-width: 600px;
+  padding: 0 24px;
   margin: 0 auto;
 }
 #chatroom h2 span.highlight {
@@ -21,7 +22,8 @@ body {
   list-style: none;
   padding: 0;
   max-height: 480px;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 #chatroom ul .item {
   position: relative;
@@ -51,9 +53,19 @@ body {
   font-size: 12px;
 }
 #chatroom .inputfield textarea {
-  width: 100%;
+  width: calc(100% - 60px);
   border: 2px solid #E0E0E0;
-  border-radius: 0 4px 4px 0;
+  border-radius: 4px 0 0 4px;
   resize: none;
   padding: 8px;
+  height: 44px;
+}
+#chatroom .inputfield button {
+  float: right;
+  width: 60px;
+  height: 44px;
+  color: #666;
+  border: 2px solid #E0E0E0;
+  border-radius: 0 4px 4px 0;
+  border-left: none;
 }
