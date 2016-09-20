@@ -18,12 +18,22 @@ body {
 }
 
 header {
-  min-height: 240px;
+  height: 240px;
   background-image: url("../top.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: left center;
   position: relative;
+}
+@media screen and (max-width: 600px) {
+  header {
+    height: 200px;
+  }
+}
+@media screen and (max-width: 600px) {
+  header {
+    height: 180px;
+  }
 }
 header h1 {
   position: absolute;
