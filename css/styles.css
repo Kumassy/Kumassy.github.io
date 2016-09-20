@@ -122,6 +122,11 @@ header h1 {
   color: #333;
   text-decoration: none;
 }
+@media screen and (max-width: 480px) {
+  #social ul li.item a {
+    padding: 8px 12px;
+  }
+}
 #social ul li.item i.fa {
   padding-right: 4px;
 }
