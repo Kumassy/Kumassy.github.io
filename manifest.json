@@ -1,0 +1,14 @@
+{
+  "name": "Kumassy.com",
+  "short_name": "Kumassy.com",
+  "display": "standalone",
+  "icons": [{
+    "src": "kumassy-icon.jpg",
+    "sizes": "64x64",
+    "type": "image/png",
+    "density": "1.0"
+  }],
+  "chrome_related_applications": [{
+    "platform": "web"
+  }]
+}
