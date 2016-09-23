@@ -19,7 +19,7 @@ body {
 
 header {
   height: 240px;
-  background-image: url("../top.jpg");
+  background-image: url("../images/top.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: left center;
