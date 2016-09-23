@@ -29,7 +29,7 @@ function resister_reply(message){
   }
 
   setTimeout(function(){
-    insert_message('images/icon/kumassy.jpg', 'Kumassy', reply);
+    insert_message('images/icons/kumassy.jpg', 'Kumassy', reply);
   }, 1000);
 
 }
@@ -45,7 +45,7 @@ textarea.addEventListener('keydown', function (e){
         return;
       }
 
-      insert_message('images/icon/you.jpg', 'You', text);
+      insert_message('images/icons/you.jpg', 'You', text);
       textarea.value = "";
       event.preventDefault(); // Don't insert '\n' by press down return key
       resister_reply(text);
