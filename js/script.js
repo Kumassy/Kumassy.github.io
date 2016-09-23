@@ -48,7 +48,7 @@ document.querySelector('.inputfield button').addEventListener('click', function 
     return;
   }
 
-  insert_message('you-icon.jpg', 'You', text);
+  insert_message('images/icons/you.jpg', 'You', text);
   textarea.value = "";
   event.preventDefault(); // Don't insert '\n' by press down return key
   resister_reply(text);
