@@ -30,7 +30,7 @@ header {
     height: 200px;
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 480px) {
   header {
     height: 180px;
   }
@@ -41,6 +41,12 @@ header h1 {
   right: 48px;
   bottom: 24px;
   color: #eee;
+}
+@media screen and (max-width: 600px) {
+  header h1 {
+    right: 24px;
+    bottom: 12px;
+  }
 }
 
 #chatroom {

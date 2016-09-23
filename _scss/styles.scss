@@ -29,7 +29,7 @@ header{
 	@media screen and (max-width: 600px) {
 		height: 200px;
 	}
-	@media screen and (max-width: 600px) {
+	@media screen and (max-width: 480px) {
 		height: 180px;
 	}
 	background-image: url("../top.jpg");
@@ -48,6 +48,11 @@ header{
 		right: 48px;
 		bottom: 24px;
 		color: #eee;
+
+		@media screen and (max-width: 600px) {
+			right: 24px;
+			bottom: 12px;
+		}
 	}
 }
 #chatroom{
