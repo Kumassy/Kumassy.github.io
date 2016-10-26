@@ -29,7 +29,7 @@
 
 
 /* eslint-disable quotes, comma-spacing */
-var PrecacheConfig = [["/bower_components/polymer/polymer.html","474969f0521b6ac7a0d4adec5ba8c803"],["/index.html","947cb40090fb18fab489d93010d52f8e"]];
+var PrecacheConfig = [["/index.html","947cb40090fb18fab489d93010d52f8e"],["/shared-bundle.html","06e7f1f5409bbd831ffe87fa751bdeae"],["/src/life-app/life-app.html","8ad8d8d64349ce158790de9c7778de62"],["/src/life-canvas/life-canvas.html","5201932df2968712cfce17d773d60ae1"]];
 /* eslint-enable quotes, comma-spacing */
 var CacheNamePrefix = 'sw-precache-v1--' + (self.registration ? self.registration.scope : '') + '-';
 
