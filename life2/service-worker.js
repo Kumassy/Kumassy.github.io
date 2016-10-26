@@ -29,7 +29,7 @@
 
 
 /* eslint-disable quotes, comma-spacing */
-var PrecacheConfig = [["/index.html","bebbc815acfa511d9e0f83bb50840967"]];
+var PrecacheConfig = [["/bower_components/polymer/polymer.html","474969f0521b6ac7a0d4adec5ba8c803"],["/index.html","947cb40090fb18fab489d93010d52f8e"]];
 /* eslint-enable quotes, comma-spacing */
 var CacheNamePrefix = 'sw-precache-v1--' + (self.registration ? self.registration.scope : '') + '-';
 
