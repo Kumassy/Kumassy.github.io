@@ -29,7 +29,7 @@
 
 
 /* eslint-disable quotes, comma-spacing */
-var PrecacheConfig = [["/index.html","7fce0ad91e4b5ca0e3edda646b973dbb"],["/src/life-app/life-app.html","ab78cabb6de445424ccd323677efd1cd"],["/src/life-canvas/life-canvas.html","828a226ff7bccc8a08c9e5f0cd090648"]];
+var PrecacheConfig = [["/index.html","fae173d45b5914244b02d016a272cd9f"],["/src/app-shell/app-shell.html","09287af670713b9b12574aac0351798b"],["/src/life-app/life-app.html","0935b71adbb6afd64b9ff17f00ce0b99"],["/src/life-canvas/life-canvas.html","0046e61110b7ef39db82e130e491d64b"]];
 /* eslint-enable quotes, comma-spacing */
 var CacheNamePrefix = 'sw-precache-v1--' + (self.registration ? self.registration.scope : '') + '-';
 
