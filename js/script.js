@@ -1,10 +1,13 @@
 'use strict';
 
+////////////
+// Kumassy Chat
 (function () {
   'use strict';
 
-  function insertMessage(imgSrc, name, message) {
-    var div = '\n      <li class="item">\n        <div class="message_icon">\n          <img class="avatar" src="./' + imgSrc + '">\n        </div>\n        <div class="message_content">\n          <div class="name">' + name + '</div>\n          <div class="message">' + message + '</div>\n          <div class="timestamp">' + new Date().toLocaleDateString('ja-JP', { hour: "2-digit", minute: "2-digit" }) + '</div>\n        </div>\n      </li>\n    ';
+  function insertMessage(name, message) {
+    var imageUrl = 'images/icons/' + name.toLowerCase() + '.jpg';
+    var div = '\n      <li class="item">\n        <div class="message_icon">\n          <img class="avatar" src="./' + imageUrl + '">\n        </div>\n        <div class="message_content">\n          <div class="name">' + name + '</div>\n          <div class="message">' + message + '</div>\n          <div class="timestamp">' + new Date().toLocaleDateString('ja-JP', { hour: "2-digit", minute: "2-digit" }) + '</div>\n        </div>\n      </li>\n    ';
     var messageList = document.querySelector('#chatroom ul');
     messageList.insertAdjacentHTML('beforeend', div);
 
@@ -22,7 +25,7 @@
     }
 
     setTimeout(function () {
-      insertMessage('images/icons/kumassy.jpg', 'Kumassy', reply);
+      insertMessage('Kumassy', reply);
     }, 1000);
   }
 
@@ -35,7 +38,7 @@
       return;
     }
 
-    insertMessage('images/icons/you.jpg', 'You', text);
+    insertMessage('You', text);
     textarea.value = "";
     e.preventDefault(); // Don't insert '\n' by press down return key
     resisterReply(text);

@@ -1,11 +1,14 @@
+////////////
+// Kumassy Chat
 (function() {
   'use strict';
 
-  function insertMessage(imgSrc, name, message){
+  function insertMessage(name, message){
+    const imageUrl = `images/icons/${name.toLowerCase()}.jpg`;
     const div = `
       <li class="item">
         <div class="message_icon">
-          <img class="avatar" src="./${imgSrc}">
+          <img class="avatar" src="./${imageUrl}">
         </div>
         <div class="message_content">
           <div class="name">${name}</div>
@@ -32,7 +35,7 @@
     }
 
     setTimeout(function(){
-      insertMessage('images/icons/kumassy.jpg', 'Kumassy', reply);
+      insertMessage('Kumassy', reply);
     }, 1000);
 
   }
@@ -46,7 +49,7 @@
       return;
     }
 
-    insertMessage('images/icons/you.jpg', 'You', text);
+    insertMessage('You', text);
     textarea.value = "";
     e.preventDefault(); // Don't insert '\n' by press down return key
     resisterReply(text);
