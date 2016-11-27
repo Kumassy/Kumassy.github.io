@@ -17,7 +17,7 @@
 
   function resisterReply(message) {
     var reply = '';
-    var replyList = ['🍣', '🏆', '(˘ω˘ )', '( ˘ω˘)', '( ˘ω˘)!!'];
+    var replyList = ['🍣', '🏆', '(˘ω˘ )', '( ˘ω˘)', '( ˘ω˘)!!', '₍₍(ง˘ω˘)ว⁾⁾', '(ヽ´ω`)'];
     if (message.includes('Hello')) {
       reply = '( ˘ω˘)ﾉ';
     } else {
@@ -52,4 +52,8 @@
   document.querySelector('.inputfield button').addEventListener('click', function (e) {
     handleSendingMessage(e);
   }, false);
+
+  insertMessage('Kumassy', "Hello, Kumassy World!");
+  insertMessage('Kumassy', "Put some awesome words in the text field below. Then, click 'send' button (or just press 'Enter' key).");
+  insertMessage('Kumassy', "Enjoy chatting with me!");
 })();

@@ -26,7 +26,7 @@
 
   function resisterReply(message){
     let reply = '';
-    const replyList = ['🍣', '🏆', '(˘ω˘ )', '( ˘ω˘)', '( ˘ω˘)!!'];
+    const replyList = ['🍣', '🏆', '(˘ω˘ )', '( ˘ω˘)', '( ˘ω˘)!!', '₍₍(ง˘ω˘)ว⁾⁾', '(ヽ´ω`)'];
     if(message.includes('Hello')){
       reply = '( ˘ω˘)ﾉ';
     }
@@ -63,5 +63,9 @@
   document.querySelector('.inputfield button').addEventListener('click', function(e){
     handleSendingMessage(e);
   }, false);
+
+  insertMessage('Kumassy', "Hello, Kumassy World!");
+  insertMessage('Kumassy', "Put some awesome words in the text field below. Then, click 'send' button (or just press 'Enter' key).");
+  insertMessage('Kumassy', "Enjoy chatting with me!");
 
 })();
