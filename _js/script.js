@@ -75,6 +75,9 @@
 (function() {
   'use strict';
 
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
   function shuffle(array) {
     var n = array.length, t, i;
 
@@ -105,22 +108,26 @@
   function handleClick(cardElem){
     if(!cardElem.card.isClosed){
       flip(cardElem);
-
-      if(selectedCardElem && (selectedCardElem != cardElem)){
-        // check equality
-        if(selectedCardElem.card.item === cardElem.card.item){
-          selectedCardElem.card.isClosed = true;
-          cardElem.card.isClosed = true;
+      sleep(800).then(() => {
+        if(selectedCardElem && (selectedCardElem != cardElem)){
+          // check equality
+          if(selectedCardElem.card.item === cardElem.card.item){
+            selectedCardElem.card.isClosed = true;
+            cardElem.card.isClosed = true;
+          }
+          else{
+            flip(selectedCardElem);
+            flip(cardElem);
+          }
+          selectedCardElem = null;
+        }
+        else if(selectedCardElem === cardElem){
+          selectedCardElem = null;
         }
         else{
-          flip(selectedCardElem);
-          flip(cardElem);
+          selectedCardElem = cardElem;
         }
-        selectedCardElem = null;
-      }
-      else{
-        selectedCardElem = cardElem;
-      }
+      });
     }
 
     console.log("Selected: ");
