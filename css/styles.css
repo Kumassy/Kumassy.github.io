@@ -147,6 +147,24 @@ header h1 {
 #pair ul .open {
   transform: rotateX(180deg);
 }
+@media screen and (max-width: 480px) {
+  #pair ul .card {
+    width: 96px;
+    height: 96px;
+  }
+  #pair ul .card .back {
+    line-height: 96px;
+  }
+}
+@media screen and (max-width: 360px) {
+  #pair ul .card {
+    width: 84px;
+    height: 84px;
+  }
+  #pair ul .card .back {
+    line-height: 84px;
+  }
+}
 
 #suyaa {
   max-width: 600px;

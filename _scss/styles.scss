@@ -129,6 +129,7 @@ header{
 }
 #pair{
 	@include basic-container();
+	$card-size: 124px;
 
 	ul{
 		list-style: none;
@@ -139,8 +140,8 @@ header{
 
 		.card{
 			margin: 4px;
-			width: 124px;
-			height: 124px;
+			width: $card-size;
+			height: $card-size;
 			border-radius: 4px;
 			border: 1px solid #E0E0E0;
 
@@ -162,12 +163,41 @@ header{
 			.back{
 				background: #ffffff;
 				transform: rotateX(180deg);
-		    line-height: 124px;
+		    line-height: $card-size;
 				text-align: center;
 			}
 		}
 		.open{
 			transform: rotateX(180deg);
+		}
+	}
+
+
+	@media screen and (max-width: 480px) {
+		$card-size: 96px;
+		ul{
+			.card{
+				width: $card-size;
+				height: $card-size;
+
+				.back{
+					line-height: $card-size;
+				}
+			}
+		}
+
+	}
+	@media screen and (max-width: 360px) {
+		$card-size: 84px;
+		ul{
+			.card{
+				width: $card-size;
+				height: $card-size;
+
+				.back{
+					line-height: $card-size;
+				}
+			}
 		}
 	}
 
