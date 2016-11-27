@@ -57,3 +57,80 @@
   insertMessage('Kumassy', "Put some awesome words in the text field below. Then, click 'send' button (or just press 'Enter' key).");
   insertMessage('Kumassy', "Enjoy chatting with me!");
 })();
+
+////////////
+// Find the pair
+(function () {
+  'use strict';
+
+  function shuffle(array) {
+    var n = array.length,
+        t,
+        i;
+
+    while (n) {
+      i = Math.floor(Math.random() * n--);
+      t = array[n];
+      array[n] = array[i];
+      array[i] = t;
+    }
+
+    return array;
+  }
+
+  function insertCard(card) {
+    var div = '\n      <div class="card">\n        <div class="front"></div>\n        <div class="back">' + card.item + '</div>\n      </div>\n    ';
+    var cards = document.querySelector('#pair ul');
+    cards.insertAdjacentHTML('beforeend', div);
+  }
+
+  function flip(card) {
+    card.classList.contains('open') ? card.classList.remove('open') : card.classList.add('open');
+  }
+  function handleClick(cardElem) {
+    if (!cardElem.card.isClosed) {
+      flip(cardElem);
+
+      if (selectedCardElem && selectedCardElem != cardElem) {
+        // check equality
+        if (selectedCardElem.card.item === cardElem.card.item) {
+          selectedCardElem.card.isClosed = true;
+          cardElem.card.isClosed = true;
+        } else {
+          flip(selectedCardElem);
+          flip(cardElem);
+        }
+        selectedCardElem = null;
+      } else {
+        selectedCardElem = cardElem;
+      }
+    }
+
+    console.log("Selected: ");
+    console.log(selectedCardElem);
+    console.log("Clicked: ");
+    console.log(cardElem);
+  }
+
+  var seed = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+  var cards = seed.map(function (s) {
+    return {
+      item: s,
+      isClosed: false
+    };
+  });
+  cards = shuffle(cards.concat(cards));
+
+  var selectedCardElem = null;
+
+  cards.forEach(function (card) {
+    insertCard(card);
+  });
+
+  document.querySelectorAll('.card').forEach(function (cardElem, index) {
+    cardElem.card = cards[index];
+    cardElem.addEventListener('click', function () {
+      handleClick(cardElem);
+    });
+  });
+})();

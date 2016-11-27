@@ -69,3 +69,87 @@
   insertMessage('Kumassy', "Enjoy chatting with me!");
 
 })();
+
+////////////
+// Find the pair
+(function() {
+  'use strict';
+
+  function shuffle(array) {
+    var n = array.length, t, i;
+
+    while (n) {
+      i = Math.floor(Math.random() * n--);
+      t = array[n];
+      array[n] = array[i];
+      array[i] = t;
+    }
+
+    return array;
+  }
+
+  function insertCard(card){
+    const div = `
+      <div class="card">
+        <div class="front"></div>
+        <div class="back">${card.item}</div>
+      </div>
+    `;
+    const cards = document.querySelector('#pair ul');
+    cards.insertAdjacentHTML('beforeend', div);
+  }
+
+  function flip(card) {
+    card.classList.contains('open') ? card.classList.remove('open') : card.classList.add('open');
+  }
+  function handleClick(cardElem){
+    if(!cardElem.card.isClosed){
+      flip(cardElem);
+
+      if(selectedCardElem && (selectedCardElem != cardElem)){
+        // check equality
+        if(selectedCardElem.card.item === cardElem.card.item){
+          selectedCardElem.card.isClosed = true;
+          cardElem.card.isClosed = true;
+        }
+        else{
+          flip(selectedCardElem);
+          flip(cardElem);
+        }
+        selectedCardElem = null;
+      }
+      else{
+        selectedCardElem = cardElem;
+      }
+    }
+
+    console.log("Selected: ");
+    console.log(selectedCardElem)
+    console.log("Clicked: ");
+    console.log(cardElem)
+  }
+
+
+  const seed = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+  let cards = seed.map(function(s){
+    return {
+      item: s,
+      isClosed: false
+    };
+  });
+  cards = shuffle(cards.concat(cards));
+
+  let selectedCardElem = null;
+
+  cards.forEach(function(card){
+    insertCard(card);
+  });
+
+  document.querySelectorAll('.card').forEach(function(cardElem, index){
+    cardElem.card = cards[index];
+    cardElem.addEventListener('click', function() {
+      handleClick(cardElem);
+    });
+  });
+
+})();
