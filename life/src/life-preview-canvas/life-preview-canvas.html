@@ -1,0 +1,17 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../life-canvas-base/life-canvas-base.html">
+
+
+</head><body><dom-module id="life-preview-canvas">
+  <template>
+    
+    <life-canvas-base id="canvas" is-playing="[[autoPlay]]" width="[[width]]" height="[[height]]" mode="canvas" cell-size="[[cellSize]]"></life-canvas-base>
+    
+  </template>
+
+  <style>
+  </style>
+
+  <script>Polymer({is:"life-preview-canvas",properties:{width:{type:Number,value:40},height:{type:Number,value:40},rle:{type:String,value:"2o2b$o3b$3bo$2b2o!"},autoPlay:{type:Boolean,value:!1},patternWidth:{type:Number},patternHeight:{type:Number},cellSize:{type:Number,value:2},onHover:{type:Boolean,value:!1}},observers:["_handleAutoAdjust(patternWidth, patternHeight, rle)"],ready:function(){this.$.canvas.getCanvas().addEventListener("mouseenter",this._handleMouseEnter(this),!1),this.$.canvas.getCanvas().addEventListener("mouseleave",this._handleMouseLeave(this),!1)},_handleMouseEnter:function(e){return function(t){console.log("hover!!"),e.onHover=!0}},_handleMouseLeave:function(e){return function(t){e.onHover=!1}},_handleAutoAdjust:function(e,t,i){var a=1;if(e>this.width||t>this.height)a=1;else{var n=Math.min(Math.floor(this.width/(1.4*e)),Math.floor(this.height/(1.4*t)));a=[1,n,8].sort(function(e,t){return e-t})[1]}this.cellSize=a;var h=this.$.canvas;h.clearCanvas();var r=Math.floor(this.width/this.cellSize/2-this.patternWidth/2),o=Math.floor(this.height/this.cellSize/2-this.patternHeight/2);h.injectPattern(r,o,this.rle)}});</script>
+</dom-module>
+</body></html>
