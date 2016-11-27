@@ -116,6 +116,7 @@ header h1 {
   padding: 0;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 #pair ul .card {
   margin: 4px;
@@ -135,11 +136,13 @@ header h1 {
   backface-visibility: hidden;
 }
 #pair ul .card .front {
-  background: #ee0000;
+  background: #00b8e6;
 }
 #pair ul .card .back {
   background: #ffffff;
   transform: rotateX(180deg);
+  line-height: 124px;
+  text-align: center;
 }
 #pair ul .open {
   transform: rotateX(180deg);

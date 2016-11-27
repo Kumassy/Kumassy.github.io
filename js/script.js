@@ -120,7 +120,7 @@
     console.log(cardElem);
   }
 
-  var seed = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+  var seed = ['(˘ω˘ )', '( ˘ω˘)', '₍₍(ง˘ω˘)ว⁾⁾', '( ˘ω˘)ﾉ', '(˘ω˘ ≡ ˘ω˘)', '( ˘ω˘)♡(˘ω˘ )', '...( ˘ω˘)🍣', '( ˘ω˘)!!'];
   var cards = seed.map(function (s) {
     return {
       item: s,
@@ -135,7 +135,8 @@
     insertCard(card);
   });
 
-  document.querySelectorAll('.card').forEach(function (cardElem, index) {
+  // document.querySelectorAll('.card').forEach(function(cardElem, index){
+  Array.prototype.forEach.call(document.querySelectorAll('.card'), function (cardElem, index) {
     cardElem.card = cards[index];
     cardElem.addEventListener('click', function () {
       handleClick(cardElem);

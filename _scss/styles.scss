@@ -135,6 +135,7 @@ header{
 		padding: 0;
 		display: flex;
 		flex-wrap: wrap;
+		justify-content: center;
 
 		.card{
 			margin: 4px;
@@ -156,11 +157,13 @@ header{
 
 			}
 			.front{
-				background: #ee0000;
+				background: #00b8e6;;
 			}
 			.back{
 				background: #ffffff;
 				transform: rotateX(180deg);
+		    line-height: 124px;
+				text-align: center;
 			}
 		}
 		.open{
