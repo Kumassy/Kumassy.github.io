@@ -1,55 +1,52 @@
-"use strict";
+'use strict';
 
-function insert_message(img_src, name, message) {
-  var div = "\n    <li class=\"item\">\n      <div class=\"message_icon\">\n        <img class=\"avatar\" src=\"./" + img_src + "\">\n      </div>\n      <div class=\"message_content\">\n        <div class=\"name\">" + name + "</div>\n        <div class=\"message\">" + message + "</div>\n        <div class=\"timestamp\">" + new Date().toLocaleDateString('ja-JP', { hour: "2-digit", minute: "2-digit" }) + "</div>\n      </div>\n    </li>\n  ";
-  var message_list = document.querySelector('#chatroom ul');
-  message_list.insertAdjacentHTML('beforeend', div);
+(function () {
+  'use strict';
 
-  // scroll to new entry
-  message_list.scrollTop = message_list.scrollHeight;
-}
+  function insertMessage(imgSrc, name, message) {
+    var div = '\n      <li class="item">\n        <div class="message_icon">\n          <img class="avatar" src="./' + imgSrc + '">\n        </div>\n        <div class="message_content">\n          <div class="name">' + name + '</div>\n          <div class="message">' + message + '</div>\n          <div class="timestamp">' + new Date().toLocaleDateString('ja-JP', { hour: "2-digit", minute: "2-digit" }) + '</div>\n        </div>\n      </li>\n    ';
+    var messageList = document.querySelector('#chatroom ul');
+    messageList.insertAdjacentHTML('beforeend', div);
 
-function resister_reply(message) {
-  var reply = '';
-  var reply_list = ['🍣', '🏆', '(˘ω˘ )', '( ˘ω˘)', '( ˘ω˘)!!'];
-  if (message.includes('Hello')) {
-    reply = '( ˘ω˘)ﾉ';
-  } else {
-    reply = reply_list[Math.floor(Math.random() * reply_list.length)];
+    // scroll to new entry
+    messageList.scrollTop = messageList.scrollHeight;
   }
 
-  setTimeout(function () {
-    insert_message('images/icons/kumassy.jpg', 'Kumassy', reply);
-  }, 1000);
-}
+  function resisterReply(message) {
+    var reply = '';
+    var replyList = ['🍣', '🏆', '(˘ω˘ )', '( ˘ω˘)', '( ˘ω˘)!!'];
+    if (message.includes('Hello')) {
+      reply = '( ˘ω˘)ﾉ';
+    } else {
+      reply = replyList[Math.floor(Math.random() * replyList.length)];
+    }
 
-var textarea = document.querySelector('.inputfield textarea');
-textarea.addEventListener('keydown', function (e) {
-  // Do your key combination detection
-  if (e.keyCode === 13) {
-    var text = textarea.value;
+    setTimeout(function () {
+      insertMessage('images/icons/kumassy.jpg', 'Kumassy', reply);
+    }, 1000);
+  }
+
+  function handleSendingMessage(e) {
+    var textarea = document.querySelector('.inputfield textarea');
+    var text = document.querySelector('.inputfield textarea').value;
 
     if (!text) {
       e.preventDefault();
       return;
     }
 
-    insert_message('images/icons/you.jpg', 'You', text);
+    insertMessage('images/icons/you.jpg', 'You', text);
     textarea.value = "";
-    event.preventDefault(); // Don't insert '\n' by press down return key
-    resister_reply(text);
-  }
-}, false);
-document.querySelector('.inputfield button').addEventListener('click', function (e) {
-  var text = textarea.value;
-
-  if (!text) {
-    e.preventDefault();
-    return;
+    e.preventDefault(); // Don't insert '\n' by press down return key
+    resisterReply(text);
   }
 
-  insert_message('images/icons/you.jpg', 'You', text);
-  textarea.value = "";
-  event.preventDefault(); // Don't insert '\n' by press down return key
-  resister_reply(text);
-}, false);
+  document.querySelector('.inputfield textarea').addEventListener('keydown', function (e) {
+    if (e.keyCode === 13) {
+      handleSendingMessage(e);
+    }
+  }, false);
+  document.querySelector('.inputfield button').addEventListener('click', function (e) {
+    handleSendingMessage(e);
+  }, false);
+})();
