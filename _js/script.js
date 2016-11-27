@@ -130,10 +130,10 @@
       });
     }
 
-    console.log("Selected: ");
-    console.log(selectedCardElem)
-    console.log("Clicked: ");
-    console.log(cardElem)
+    // console.log("Selected: ");
+    // console.log(selectedCardElem)
+    // console.log("Clicked: ");
+    // console.log(cardElem)
   }
 
 

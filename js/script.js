@@ -114,10 +114,10 @@
       });
     }
 
-    console.log("Selected: ");
-    console.log(selectedCardElem);
-    console.log("Clicked: ");
-    console.log(cardElem);
+    // console.log("Selected: ");
+    // console.log(selectedCardElem)
+    // console.log("Clicked: ");
+    // console.log(cardElem)
   }
 
   var seed = ['(˘ω˘ )', '( ˘ω˘)', '₍₍(ง˘ω˘)ว⁾⁾', '( ˘ω˘)ﾉ', '(˘ω˘ ≡ ˘ω˘)', '( ˘ω˘)♡(˘ω˘ )', '...( ˘ω˘)🍣', '( ˘ω˘)!!'];
