@@ -151,6 +151,7 @@ header h1 {
   #pair ul .card {
     width: 96px;
     height: 96px;
+    font-size: smaller;
   }
   #pair ul .card .back {
     line-height: 96px;
@@ -160,6 +161,7 @@ header h1 {
   #pair ul .card {
     width: 84px;
     height: 84px;
+    font-size: small;
   }
   #pair ul .card .back {
     line-height: 84px;

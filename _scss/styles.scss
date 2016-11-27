@@ -179,6 +179,7 @@ header{
 			.card{
 				width: $card-size;
 				height: $card-size;
+				font-size: smaller;
 
 				.back{
 					line-height: $card-size;
@@ -193,6 +194,7 @@ header{
 			.card{
 				width: $card-size;
 				height: $card-size;
+				font-size: small;
 
 				.back{
 					line-height: $card-size;
