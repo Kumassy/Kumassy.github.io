@@ -1,0 +1,117 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../sort-row/sort-row.html">
+
+</head><body><dom-module id="sort-canvas">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <canvas id="canvas" width$="[[_canvasWidth]]" height$="[[_canvasHeight]]"></canvas>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'sort-canvas',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'sort-app',
+        },
+        array: {
+          type: Object,
+          value: [],
+          // observer: 'draw'
+        },
+        cellSize: {
+          type: Number,
+          value: 2,
+        },
+        hue: {
+          type: Number,
+          value: 190,
+        },
+        _canvasWidth: {
+          type: Number,
+          value: 100,
+          computed: '_computeCanvasWidth(array)'
+        },
+        _canvasHeight: {
+          type: Number,
+          value: 200,
+          computed: '_computeCanvasHeight(array)'
+        },
+      },
+
+      observers: [
+       'draw(array.*)'
+     ],
+
+     _computeCanvasWidth: function(array){
+       if(!array) return 0;
+       return array.length * this.cellSize;
+     },
+
+     _computeCanvasHeight: function(array){
+       if(!array || !array[0]) return 0;
+       return array[0].length * this.cellSize;
+     },
+
+
+      ready: function(){
+        // // let seed = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+        // let seed = Array.from(Array(100).keys());
+        // // let a = [];
+        //
+        // for(let i = 0; i < 600; i++){
+        //   // this.array.push(seed.shuffle());
+        //   this.push('array',seed.shuffle() );
+        // }
+        //
+        // console.log(this.array);
+
+        // this.draw();
+        // this.notifyPath('array');
+      },
+
+      draw: function(){
+        let canvas = this.$.canvas;
+        let ctx = canvas.getContext('2d');
+
+        // draw background
+        ctx.fillStyle = "#eeeeee";
+        ctx.fillRect(0, 0, this._canvasWidth, this._canvasHeight);
+
+        for(let w = 0; w < this.array.length; w++){
+          for(let h = 0; h < this.array[w].length; h++){
+            if(!this.array || !this.array[w]) return;
+            ctx.fillStyle = this._getColor(this.array[w][h], this.array[w].length);
+            ctx.fillRect(w * this.cellSize, h * this.cellSize, this.cellSize, this.cellSize);
+          }
+        }
+      },
+
+      // reDrawAt: function(w){
+      //   let canvas = this.$.canvas;
+      //   let ctx = canvas.getContext('2d');
+      //
+      //   for(let h = 0; h < this.array.length; h++){
+      //     if(!this.array || !this.array[w]) return;
+      //     ctx.fillStyle = this._getColorA(this.array[w][h]);
+      //     ctx.fillRect(w * this.cellSize, h * this.cellSize, this.cellSize, this.cellSize);
+      //   }
+      // },
+      _getColor: function(weight, max){
+        return `hsl(${this.hue}, 100%, ${100 - (weight / max) * 50}%)`;
+      },
+
+      // _getColorA: (weight) => `hsl(${(190 + 120) % 360}, 100%, ${100 - weight / 2}%)`,
+
+    });
+  </script>
+</dom-module>
+</body></html>

@@ -1,0 +1,181 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+
+</head><body><dom-module id="sort-new-method-dialog">
+  <template>
+    <paper-dialog id="dialog">
+      <paper-dialog-scrollable>
+        <paper-input id="identifier" label="Identifier" auto-validate="" pattern="[a-zA-Z]+" error-message="半角アルファベットで入力してください" value="{{_newSortMethod.identifier}}" placeholder="quickSort" required=""></paper-input>
+        <paper-input id="name" label="Name" error-message="必須項目です" value="{{_newSortMethod.name}}" placeholder="クイックソート" required=""></paper-input>
+        <paper-textarea id="textarea" label="Code" value="{{_newSortMethod.codeString}}" placeholder="function(array){ .... }" on-value-changed="_notifyResize" error-message="不正な JavaScript コードです" required=""></paper-textarea>
+
+      </paper-dialog-scrollable>
+      <div class="buttons">
+        <paper-button dialog-dismiss="">Cancel</paper-button>
+        <paper-button autofocus="" on-tap="_handleTap">OK</paper-button>
+      </div>
+    </paper-dialog>
+
+
+    <paper-dialog id="testResultDialog">
+      <h2>テスト結果</h2>
+
+      <template is="dom-repeat" items="[[_testResults]]">
+        <h3>Case [[__plus1(index)]]</h3>
+        <template is="dom-if" if="[[item]]">
+          <iron-icon icon="check-circle"></iron-icon> OK
+        </template>
+        <template is="dom-if" if="[[!item]]">
+          <iron-icon icon="report-problem"></iron-icon> NG
+        </template>
+      </template>
+      <div class="buttons">
+        <paper-button dialog-confirm="" autofocus="">OK</paper-button>
+      </div>
+    </paper-dialog>
+  </template>
+
+  <style>
+  </style>
+
+  <script>
+    Polymer({
+      is: 'sort-new-method-dialog',
+      properties: {
+        _newSortMethod: {
+          type: Object,
+          value: {}
+        },
+        _errorMessages: {
+          type: Object,
+          value: []
+        },
+        _testResults: {
+          type: Object,
+          value: []
+        }
+      },
+
+      ready: function(){
+        let c = `
+function (_array){
+  let array = [].concat(_array);
+  let result = [];
+
+  result.push([].concat(array));
+  for(let i = 0; i < array.length; i++){
+    for(let j = 0; j < array.length - 1; j++){
+      if(array[j + 1] < array[j]){
+        [array[j + 1], array[j]] = [array[j], array[j + 1]];
+      }
+    }
+    result.push([].concat(array));
+  }
+
+  return result;
+}`;
+        this.set('_newSortMethod.codeString', c);
+      },
+      __plus1: function(item){
+        return item + 1;
+      },
+      _notifyResize: function(){
+        this.$.dialog.notifyResize();
+      },
+      _handleTap: function(){
+        // validate
+        this.$.identifier.validate();
+        this.$.name.validate();
+        this.$.textarea.validate();
+
+        if(!this.$.identifier.invalid && !this.$.name.invalid && !this.$.textarea.invalid && this._validateCode()){
+          this._newSortMethod.valid = this._runTest();
+
+          this.$.dialog.close();
+          this.$.testResultDialog.open();
+
+          this.fire('sort-method-register', {sort: this._newSortMethod});
+          this._newSortMethod = {};
+          this.$.textarea.invalid = false;
+          this.$.identifier.invalid = false;
+        }
+        else{
+
+        }
+
+      },
+      _validateCode: function(){
+        let codeFunc;
+        try {
+           codeFunc = eval(`(${this._newSortMethod.codeString})`);
+        } catch(e) {
+           console.error(e);
+           this.$.textarea.invalid = true;
+           return false;
+        }
+        this.$.textarea.invalid = false;
+        this._newSortMethod.code = codeFunc;
+
+        return true;
+      },
+      _assertValid: function(expected, actual){
+        if (expected === actual) return true;
+        if (expected == null || actual == null) return false;
+
+        for (let i = 0; i < actual.length; i++) {
+          if (actual[i].length != expected.length) return false;
+        }
+
+        let act = actual.slice(-1)[0];
+        for (let i = 0; i < expected.length; i++){
+          if (expected[i] !== act[i]) return false;
+        }
+        return true;
+      },
+      _runTest: function(){
+        let testcase = [
+          {
+            input: [ 5, 12, 8, 9, 0, 7, 4, 2, 3, 14, 6, 1, 11, 15, 10, 13 ],
+            expect: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ]
+          },
+          {
+            input: [13, 29, 27, 18, 7, 24, 25, 20, 11, 22, 17, 23, 3, 1, 28, 8, 14, 21, 10, 4, 6, 5, 30, 12, 15, 19, 26, 16, 9, 2],
+            expect: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+          },
+          {
+            input: [59, 37, 49, 55, 9, 47, 11, 57, 53, 32, 40, 38, 58, 54, 61, 20, 25, 29, 22, 27, 30, 5, 8, 26, 45, 21, 35, 19, 31, 39, 2, 16, 28, 43, 33, 12, 46, 6, 3, 63, 34, 24, 23, 10, 50, 62, 18, 42, 44, 15, 36, 13, 1, 17, 48, 64, 4, 60, 56, 41, 14, 51, 7, 52],
+            expect: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64]
+          },
+        ];
+
+
+        let testResult;
+        try {
+          let f = this._newSortMethod.code;
+          testResult = testcase.map((test) => {
+            return this._assertValid(test.expect, f(test.input));
+          });
+        } catch(e) {
+          console.error(e);
+          return false;
+        }
+
+        this.set('_testResults', testResult);
+        return testResult.every((e) => e);
+      },
+
+      open: function(){
+        this.$.dialog.open();
+      },
+
+    });
+  </script>
+</dom-module>
+</body></html>

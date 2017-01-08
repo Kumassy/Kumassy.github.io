@@ -1,0 +1,47 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../sort-canvas/sort-canvas.html">
+
+</head><body><dom-module id="sort-row">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        /*width: 600px;*/
+        font-size: small;
+        border-radius: 4px;
+        /*background: #eeeeee;*/
+        padding: 4px 2px;
+        /*margin-bottom: 8px;*/
+
+        /*make scrollable*/
+        /*overflow-x: scroll;
+        white-space: nowrap;*/
+      }
+      div.n {
+        display: block;
+        /*display: inline;*/
+        /*background: pink;*/
+        background: lightskyblue;
+        box-sizing: border-box;
+        color: white;
+
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        text-align: center;
+        line-height: 24px;
+
+        margin-bottom: 8px;
+      }
+      /*div.wrapper{
+        width: 600px;
+      }*/
+    </style>
+    <template is="dom-repeat" items="[[row]]">
+      <div class="n">[[item]]</div>
+    </template>
+  </template>
+
+  <script>Polymer({is:"sort-row",properties:{row:{type:Object},ready:function(){console.log(this.value)}}});</script>
+</dom-module>
+</body></html>

@@ -1,0 +1,118 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../sort-row/sort-row.html">
+
+</head><body><dom-module id="sort-locus-canvas">
+  <template>
+    <style>
+      :host {
+        display: block;
+        /*background: #333;*/
+      }
+    </style>
+
+    <canvas id="canvas" width$="[[_canvasWidth]]" height$="[[_canvasHeight]]"></canvas>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'sort-locus-canvas',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'sort-app',
+        },
+        array: {
+          type: Object,
+          value: [],
+          // observer: 'draw'
+        },
+        CELL_SIZE: {
+          type: Number,
+          value: 2,
+        },
+        _canvasWidth: {
+          type: Number,
+          value: 600
+        },
+        _canvasHeight: {
+          type: Number,
+          value: 200
+        },
+      },
+
+      observers: [
+       '_handleArrayChanged(array.*)'
+     ],
+
+
+      ready: function(){
+        // // let seed = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+        // let seed = Array.from(Array(100).keys());
+        // // let a = [];
+        //
+        // for(let i = 0; i < 600; i++){
+        //   // this.array.push(seed.shuffle());
+        //   this.push('array',seed.shuffle() );
+        // }
+        //
+        // console.log(this.array);
+
+        // this.draw();
+        // this.notifyPath('array');
+
+        // let canvas = this.$.canvas;
+        // let ctx = canvas.getContext('2d');
+        // ctx.fillStyle = "#eeeeee";
+        // ctx.fillRect(0, 0, 1200, 1200);
+
+      },
+      _handleArrayChanged: function(){
+        if(!this.array || !this.array[0]) return;
+        this._canvasWidth = (28 + 4) * this.array.length;
+        this._canvasHeight = (24 + 8) * this.array[0].length + 4 * 2;
+
+
+        this._draw();
+
+      },
+      _draw: function(){
+        let canvas = this.$.canvas;
+        let ctx = canvas.getContext('2d');
+        ctx.fillStyle = "#eeeeee";
+        ctx.fillRect(0, 0, this._canvasWidth, this._canvasHeight);
+
+        let indexList = [];
+        for(let w = 0; w < this.array.length; w++){
+          for(let h = 0; h < this.array[w].length; h++){
+            let v = this.array[w][h];
+            indexList[v] = indexList[v] || [];
+            indexList[v].push(h);
+          }
+        }
+        // indexList[v] => v の 値の index list, この index を線で結ぶ
+
+        ctx.strokeStyle = 'lightskyblue';
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        for(let i = 0; i < indexList.length - 1; i++){
+          ctx.beginPath();
+          ctx.moveTo(12 + 2, (24 + 8) * indexList[i][0] + 16);
+          for(let w = 1; w < indexList[i].length; w++){
+            ctx.lineTo(w * ((12 + 2) * 2 + 4) + 12 + 2, (24 + 8) * indexList[i][w] + 16);
+          }
+          ctx.stroke();
+        }
+      }
+
+
+
+
+    });
+  </script>
+</dom-module>
+</body></html>

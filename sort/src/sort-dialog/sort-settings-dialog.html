@@ -1,0 +1,119 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+
+
+</head><body><dom-module id="sort-settings-dialog">
+  <template>
+    <paper-dialog id="dialog">
+      <div>
+        <paper-dropdown-menu label="エントリ数">
+          <paper-listbox class="dropdown-content" selected="{{settings.arrayLength}}">
+            <paper-item>16</paper-item>
+            <paper-item>32</paper-item>
+            <paper-item>64</paper-item>
+            <paper-item>128</paper-item>
+            <paper-item>256</paper-item>
+          </paper-listbox>
+        </paper-dropdown-menu>
+      </div>
+
+      <div>
+        <paper-dropdown-menu label="初期値の設定方法">
+          <paper-listbox class="dropdown-content" selected="{{settings.initialization}}">
+            <paper-item>昇順</paper-item>
+            <paper-item>降順</paper-item>
+            <paper-item>ランダム</paper-item>
+          </paper-listbox>
+        </paper-dropdown-menu>
+      </div>
+
+      <div>
+        <paper-dropdown-menu label="キャンバスの大きさ">
+          <paper-listbox class="dropdown-content" selected="{{settings.cellSize}}">
+            <paper-item>1</paper-item>
+            <paper-item>2</paper-item>
+            <paper-item>3</paper-item>
+            <paper-item>4</paper-item>
+            <paper-item>5</paper-item>
+            <paper-item>6</paper-item>
+            <paper-item>7</paper-item>
+            <paper-item>8</paper-item>
+            <paper-item>9</paper-item>
+            <paper-item>10</paper-item>
+          </paper-listbox>
+        </paper-dropdown-menu>
+      </div>
+
+      <div>
+        <div>色相</div>
+        <paper-slider value="{{settings.hue}}" max="359" min="0" pin="" on-immediate-value-change="_updateSliderStyles" immediate-value="{{_hueImmediateValue}}"></paper-slider>
+      </div>
+
+      <div class="buttons">
+        <paper-button on-tap="_handleDialogClose" autofocus="">OK</paper-button>
+      </div>
+    </paper-dialog>
+  </template>
+
+  <style>
+    paper-slider {
+      --paper-slider-pin-start-color: var(--google-blue-700);
+    }
+  </style>
+
+  <script>
+    Polymer({
+      is: 'sort-settings-dialog',
+      properties: {
+        settings: {
+          type: Object,
+          notify: true
+        },
+        _hueImmediateValue: {
+          type: Number,
+        }
+      },
+      open: function(){
+        this.oldSettings = {};
+        this.oldSettings.arrayLength = this.settings.arrayLength;
+        this.oldSettings.initialization = this.settings.initialization;
+        this.oldSettings.cellSize = this.settings.cellSize;
+        this.oldSettings.hue = this.settings.hue;
+
+        this.$.dialog.open();
+      },
+
+      _handleDialogClose: function(){
+        if(this.oldSettings.arrayLength !== this.settings.arrayLength ||
+          this.oldSettings.initialization !== this.settings.initialization ||
+          this.oldSettings.cellSize !== this.settings.cellSize ||
+          this.oldSettings.hue !== this.settings.hue){
+            this.fire('settings-update', {});
+        }
+
+        this.$.dialog.close();
+      },
+
+      _updateSliderStyles: function(e){
+        console.log(e);
+        this.customStyle['--paper-slider-active-color'] = this._getColor(this._hueImmediateValue);
+        this.customStyle['--paper-slider-knob-color'] = this._getColor(this._hueImmediateValue);
+        this.customStyle['--paper-slider-knob-start-color'] = this._getColor(this._hueImmediateValue);
+        this.customStyle['--paper-slider-knob-start-border-color'] = this._getColor(this._hueImmediateValue);
+        this.updateStyles();
+      },
+      _getColor: function(hue){
+        return `hsl(${hue}, 100%, 50%)`;
+      },
+
+    });
+  </script>
+</dom-module>
+</body></html>

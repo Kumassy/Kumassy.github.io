@@ -1,0 +1,31 @@
+<html><head><link rel="import" href="../polymer/polymer.html">
+
+
+<script src="../prism/prism.js"></script>
+
+
+<script src="../he/he.js"></script>
+
+
+<script src="assets/line-numbers.js"></script>
+
+
+
+<script src="assets/line-highlight.js"></script>
+
+
+</head><body><dom-module id="prism-js">
+  <template>
+
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <pre class$="{{setLineNumbers(linenumbers)}}" data-line$="{{ linehighlight }}"><code id="codeviewer" class$="{{setLanguage(language)}}" transformed$="{{inputValueChanged(inputValue)}}"></code></pre>
+
+
+  </template>
+  <script>!function(){Polymer({is:"prism-js",properties:{language:{type:String,value:"*"},linenumbers:{type:Boolean,value:!1},escape:{type:Boolean,value:!1},linehighlight:{type:String,value:""},theme:{type:String,value:""},inputValue:{type:String,value:""}},setLanguage:function(e){return"language-"+e},setLineNumbers:function(e){return e?"line-numbers":""},inputValueChanged:function(e){return e.length>0&&(this.$.codeviewer.innerHTML=e),this.escape&&(this.$.codeviewer.innerHTML=he.encode(e)),Prism.highlightElement(this.$.codeviewer),!0},attached:function(){this.inputValueChanged(Polymer.dom(this).textContent)}})}();</script>
+</dom-module>
+</body></html>
