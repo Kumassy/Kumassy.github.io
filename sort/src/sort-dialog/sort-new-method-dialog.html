@@ -1,6 +1,7 @@
 <html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-list/iron-list.html">
 
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
@@ -27,15 +28,33 @@
     <paper-dialog id="testResultDialog">
       <h2>テスト結果</h2>
 
-      <template is="dom-repeat" items="[[_testResults]]">
-        <h3>Case [[__plus1(index)]]</h3>
-        <template is="dom-if" if="[[item]]">
-          <iron-icon icon="check-circle"></iron-icon> OK
-        </template>
-        <template is="dom-if" if="[[!item]]">
-          <iron-icon icon="report-problem"></iron-icon> NG
-        </template>
+      <template is="dom-if" if="[[_hasFatalError]]">
+        <div>
+          実行時に以下のエラーが発生しました:
+          <div class="error-messages">
+            <iron-list items="[[_errorMessages]]">
+              <template>
+                <div>[[item]]</div>
+              </template>
+            </iron-list>
+          </div>
+        </div>
       </template>
+
+      <template is="dom-repeat" items="[[_testResults]]">
+        <h4>テスト番号 [[__plus1(index)]]</h4>
+        <div class="test-detail">
+          <template is="dom-if" if="[[item]]">
+            <iron-icon icon="check-circle"></iron-icon> OK
+          </template>
+          <template is="dom-if" if="[[!item]]">
+            <iron-icon icon="report-problem"></iron-icon> NG
+          </template>
+        </div>
+
+      </template>
+
+
       <div class="buttons">
         <paper-button dialog-confirm="" autofocus="">OK</paper-button>
       </div>
@@ -43,6 +62,25 @@
   </template>
 
   <style>
+    #testResultDialog h4 {
+      margin-bottom: 4px;
+    }
+    #testResultDialog .test-detail {
+      margin-top: 0;
+    }
+    .error-messages {
+      color: white;
+      background: var(--paper-red-a200);
+      padding: 8px;
+      border-radius: 2px;
+      min-width: 320px;
+    }
+    iron-icon[icon="check-circle"] {
+     color: var(--google-green-500);
+    }
+    iron-icon[icon="report-problem"] {
+     color: var(--google-red-500);
+    }
   </style>
 
   <script>
@@ -56,6 +94,10 @@
         _errorMessages: {
           type: Object,
           value: []
+        },
+        _hasFatalError: {
+          type: Boolean,
+          computed: '_computeHasFatalError(_errorMessages, _errorMessages.*)'
         },
         _testResults: {
           type: Object,
@@ -86,6 +128,9 @@ function (_array){
       __plus1: function(item){
         return item + 1;
       },
+      _computeHasFatalError: function(_errorMessages){
+        return _errorMessages.length !== 0;
+      },
       _notifyResize: function(){
         this.$.dialog.notifyResize();
       },
@@ -95,21 +140,21 @@ function (_array){
         this.$.name.validate();
         this.$.textarea.validate();
 
+        this.set('_testResults', []);
+        this.set('_errorMessages', []);
         if(!this.$.identifier.invalid && !this.$.name.invalid && !this.$.textarea.invalid && this._validateCode()){
           this._newSortMethod.valid = this._runTest();
 
           this.$.dialog.close();
           this.$.testResultDialog.open();
 
-          this.fire('sort-method-register', {sort: this._newSortMethod});
-          this._newSortMethod = {};
-          this.$.textarea.invalid = false;
-          this.$.identifier.invalid = false;
+          if(!this._hasFatalError){
+            this.fire('sort-method-register', {sort: this._newSortMethod});
+            this._newSortMethod = {};
+            this.$.textarea.invalid = false;
+            this.$.identifier.invalid = false;
+          }
         }
-        else{
-
-        }
-
       },
       _validateCode: function(){
         let codeFunc;
@@ -117,6 +162,7 @@ function (_array){
            codeFunc = eval(`(${this._newSortMethod.codeString})`);
         } catch(e) {
            console.error(e);
+           this.push('_errorMessages', e);
            this.$.textarea.invalid = true;
            return false;
         }
@@ -164,6 +210,7 @@ function (_array){
           });
         } catch(e) {
           console.error(e);
+          this.push('_errorMessages', e);
           return false;
         }
 
