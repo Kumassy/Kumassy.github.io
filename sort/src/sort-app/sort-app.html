@@ -3759,10 +3759,6 @@ Jfr:"𝔍",jfr:"𝔧",jmath:"ȷ",Jopf:"𝕁",jopf:"𝕛",Jscr:"𝒥",jscr:"𝒿"
       is: 'sort-canvas',
 
       properties: {
-        prop1: {
-          type: String,
-          value: 'sort-app',
-        },
         array: {
           type: Object,
           value: [],
@@ -3790,33 +3786,20 @@ Jfr:"𝔍",jfr:"𝔧",jmath:"ȷ",Jopf:"𝕁",jopf:"𝕛",Jscr:"𝒥",jscr:"𝒿"
 
       observers: [
        'draw(array.*)'
-     ],
+      ],
 
-     _computeCanvasWidth: function(array){
+      _computeCanvasWidth: function(array){
        if(!array) return 0;
        return array.length * this.cellSize;
-     },
+      },
 
-     _computeCanvasHeight: function(array){
-       if(!array || !array[0]) return 0;
-       return array[0].length * this.cellSize;
-     },
+      _computeCanvasHeight: function(array){
+        if(!array || !array[0]) return 0;
+        return array[0].length * this.cellSize;
+      },
 
 
       ready: function(){
-        // // let seed = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
-        // let seed = Array.from(Array(100).keys());
-        // // let a = [];
-        //
-        // for(let i = 0; i < 600; i++){
-        //   // this.array.push(seed.shuffle());
-        //   this.push('array',seed.shuffle() );
-        // }
-        //
-        // console.log(this.array);
-
-        // this.draw();
-        // this.notifyPath('array');
       },
 
       draw: function(){
@@ -3874,18 +3857,10 @@ Jfr:"𝔍",jfr:"𝔧",jmath:"ȷ",Jopf:"𝕁",jopf:"𝕛",Jscr:"𝒥",jscr:"𝒿"
       is: 'sort-locus-canvas',
 
       properties: {
-        prop1: {
-          type: String,
-          value: 'sort-app',
-        },
         array: {
           type: Object,
           value: [],
           // observer: 'draw'
-        },
-        CELL_SIZE: {
-          type: Number,
-          value: 2,
         },
         _canvasWidth: {
           type: Number,
@@ -3903,25 +3878,6 @@ Jfr:"𝔍",jfr:"𝔧",jmath:"ȷ",Jopf:"𝕁",jopf:"𝕛",Jscr:"𝒥",jscr:"𝒿"
 
 
       ready: function(){
-        // // let seed = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
-        // let seed = Array.from(Array(100).keys());
-        // // let a = [];
-        //
-        // for(let i = 0; i < 600; i++){
-        //   // this.array.push(seed.shuffle());
-        //   this.push('array',seed.shuffle() );
-        // }
-        //
-        // console.log(this.array);
-
-        // this.draw();
-        // this.notifyPath('array');
-
-        // let canvas = this.$.canvas;
-        // let ctx = canvas.getContext('2d');
-        // ctx.fillStyle = "#eeeeee";
-        // ctx.fillRect(0, 0, 1200, 1200);
-
       },
       _handleArrayChanged: function(){
         if(!this.array || !this.array[0]) return;
@@ -4123,8 +4079,8 @@ Jfr:"𝔍",jfr:"𝔧",jmath:"ȷ",Jopf:"𝕁",jopf:"𝕛",Jscr:"𝒥",jscr:"𝒿"
   <template>
     <paper-dialog id="dialog">
       <paper-dialog-scrollable>
-        <paper-input id="identifier" label="Identifier" auto-validate="" pattern="[a-zA-Z]+" error-message="半角アルファベットで入力してください" value="{{_newSortMethod.identifier}}" placeholder="quickSort" required=""></paper-input>
-        <paper-input id="name" label="Name" error-message="必須項目です" value="{{_newSortMethod.name}}" placeholder="クイックソート" required=""></paper-input>
+        <paper-input id="identifier" label="Identifier" auto-validate="" pattern="[a-zA-Z]+" error-message="半角アルファベットで入力してください" value="{{_newSortMethod.identifier}}" placeholder="insertionSort" required=""></paper-input>
+        <paper-input id="name" label="Name" error-message="必須項目です" value="{{_newSortMethod.name}}" placeholder="挿入ソート" required=""></paper-input>
         <paper-textarea id="textarea" label="Code" value="{{_newSortMethod.codeString}}" placeholder="function(array){ .... }" on-value-changed="_notifyResize" error-message="不正な JavaScript コードです" required=""></paper-textarea>
 
       </paper-dialog-scrollable>
@@ -4217,18 +4173,21 @@ Jfr:"𝔍",jfr:"𝔧",jmath:"ȷ",Jopf:"𝕁",jopf:"𝕛",Jscr:"𝒥",jscr:"𝒿"
 
       ready: function(){
         let c = `
-function (_array){
-  let array = [].concat(_array);
+function(_array){
+  let array = _array.clone();
   let result = [];
+  result.push(array.clone());
 
-  result.push([].concat(array));
-  for(let i = 0; i < array.length; i++){
-    for(let j = 0; j < array.length - 1; j++){
-      if(array[j + 1] < array[j]){
-        [array[j + 1], array[j]] = [array[j], array[j + 1]];
+  for(let i = 1; i < array.length; i++){
+    let t = array[i];
+    if(array[i - 1] > t){
+      let j;
+      for(j = i; j > 0 && array[j - 1] > t; j--){
+        array[j] = array[j - 1];
       }
+      array[j] = t;
     }
-    result.push([].concat(array));
+    result.push(array.clone());
   }
 
   return result;
@@ -4394,9 +4353,8 @@ function (_array){
              </template>
              [[item.name]]
            </paper-item>
-           
           </template>
-          
+
           <paper-button on-tap="_openNewSortMethodDialog" style="text-transform: none; justify-content: flex-start; width: calc(100% - 0.58em)">
               <iron-icon icon="add" item-icon=""></iron-icon>
               ソートアルゴリズムを追加
@@ -4440,10 +4398,7 @@ function (_array){
           <paper-spinner active=""></paper-spinner><p>ソートしています...</p>
         </paper-dialog>
 
-        
         <sort-new-method-dialog id="newSortDialog" on-sort-method-register="_registerNewSortMethod"></sort-new-method-dialog>
-
-
         <sort-settings-dialog id="settingsDialog" settings="{{settings}}" on-settings-update="_handleSettingsChanged"></sort-settings-dialog>
 
       </div>
@@ -4453,10 +4408,20 @@ function (_array){
   <script>
     'use strict';
 
+
+    if(!Array.prototype.clone) {
+      Array.prototype.clone = function() {
+        // shallow copy
+
+        return Object(this).concat();
+      }
+    }
+
     if (!Array.prototype.shuffle) {
       Array.prototype.shuffle = function() {
         // shallow copy
-        var array = [].concat(Object(this));
+        // var array = [].concat(Object(this));
+        var array = Object(this).clone();
         var n = array.length, t, i;
 
         while (n) {
@@ -4509,39 +4474,15 @@ function (_array){
       },
 
       ready: function(){
-        // let seed = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
-        // let seed = Array.from(Array(this.arrayLength).keys());
-        // let a = [];
-
-        // for(let i = 0; i < 600 - 1; i++){
-        //   a.push(seed.shuffle());
-        //   // this.push('array', seed.shuffle());
-        // }
-        // for(let i = 0; i < 1; i++){
-        //   a.push(this.quicksort(seed.shuffle()));
-        // }
-
-        // a = this.insertionSort(seed.shuffle());
-        // a = this.bubbleSort(seed.shuffle());
-        //
-        // this.set('array', a);
-
-        // console.log(this.array);
-
-
-        // this.push('sortMethod', ["クイックソート", this.quicksort]);
-        // this.push('sortMethod', ["挿入ソート", this.insertionSort]);
-        // this.push('sortMethod', ["バブルソート", this.bubbleSort]);
-
         this.sortMethod = [{
           identifier: 'insertionSort',
           name: "挿入ソート",
           valid: true, // コードが valid かどうか
           code:
 function(_array){
-  let array = [].concat(_array);
+  let array = _array.clone();
   let result = [];
-  result.push([].concat(array));
+  result.push(array.clone());
 
   for(let i = 1; i < array.length; i++){
     let t = array[i];
@@ -4549,11 +4490,11 @@ function(_array){
       let j;
       for(j = i; j > 0 && array[j - 1] > t; j--){
         array[j] = array[j - 1];
-        // result.push([].concat(array));
+        // result.push(array.clone());
       }
       array[j] = t;
     }
-    result.push([].concat(array));
+    result.push(array.clone());
   }
 
   return result;
@@ -4565,17 +4506,17 @@ function(_array){
           valid: true,
           code:
 function(_array){
-  let array = [].concat(_array);
+  let array = _array.clone();
   let result = [];
 
-  result.push([].concat(array));
+  result.push(array.clone());
   for(let i = 0; i < array.length; i++){
     for(let j = 0; j < array.length - 1; j++){
       if(array[j + 1] < array[j]){
         [array[j + 1], array[j]] = [array[j], array[j + 1]];
       }
     }
-    result.push([].concat(array));
+    result.push(array.clone());
   }
 
   return result;
@@ -4584,12 +4525,12 @@ function(_array){
         {
           identifier: 'quickSort',
           name: "クイックソート",
-          valid: false,
+          valid: true,
           code:
 function(_array){
-  let array = [].concat(_array);
+  let array = _array.clone();
   let result = [];
-  result.push([].concat(array));
+  result.push(array.clone());
 
 
   let stack = [];
@@ -4664,7 +4605,7 @@ function(_array){
         left = j + 1;
       }
 
-      result.push([].concat(array));
+      result.push(array.clone());
     }
   }while(sp > 0);
 
@@ -4672,13 +4613,13 @@ function(_array){
     let w = array[i];
 
     let j = i - 1;
-    while(w < array[j] && j > 0){
+    while(w < array[j] && j >= 0){
       array[j + 1] = array[j];
       j = j - 1;
     }
     array[j + 1] = w;
   }
-  result.push([].concat(array));
+  result.push(array.clone());
 
 
   return result;
@@ -4724,36 +4665,6 @@ function(_array){
             break;
         }
       },
-      quicksort: function(array){
-        let result = [];
-
-        let qsort = function(a){
-          if(a.length === 0){
-            return [];
-          }
-          else if(a.length === 1){
-            return a;
-          }
-          else if(a.length === 2){
-            if(a[0] < a[1]){
-              return a;
-            } else {
-              return a.reverse();
-            }
-          }
-          else{
-            let pivot = a[0];
-            let rest = a.slice(1);
-            let smaller = rest.filter((t) => t <= pivot);
-            let larger = rest.filter((t) => t > pivot);
-
-            return qsort(smaller).concat(pivot).concat(qsort(larger));
-          }
-        }
-
-        return qsort(array);
-      },
-
 
       _executeSort: function(){
         // let seed = Array.from(Array(this.arrayLength).keys()).shuffle();
@@ -4790,10 +4701,6 @@ function(_array){
       _handleSettingsChanged: function(){
         this._executeSort();
       },
-
-      // _notifyResize: function(){
-      //   this.$.newSortDialog.notifyResize();
-      // },
 
       _openNewSortMethodDialog: function(e){
         if(this.$.drawerLayout.narrow) this.$.drawerLayout.drawer.close();

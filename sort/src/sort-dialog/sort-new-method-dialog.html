@@ -13,8 +13,8 @@
   <template>
     <paper-dialog id="dialog">
       <paper-dialog-scrollable>
-        <paper-input id="identifier" label="Identifier" auto-validate="" pattern="[a-zA-Z]+" error-message="半角アルファベットで入力してください" value="{{_newSortMethod.identifier}}" placeholder="quickSort" required=""></paper-input>
-        <paper-input id="name" label="Name" error-message="必須項目です" value="{{_newSortMethod.name}}" placeholder="クイックソート" required=""></paper-input>
+        <paper-input id="identifier" label="Identifier" auto-validate="" pattern="[a-zA-Z]+" error-message="半角アルファベットで入力してください" value="{{_newSortMethod.identifier}}" placeholder="insertionSort" required=""></paper-input>
+        <paper-input id="name" label="Name" error-message="必須項目です" value="{{_newSortMethod.name}}" placeholder="挿入ソート" required=""></paper-input>
         <paper-textarea id="textarea" label="Code" value="{{_newSortMethod.codeString}}" placeholder="function(array){ .... }" on-value-changed="_notifyResize" error-message="不正な JavaScript コードです" required=""></paper-textarea>
 
       </paper-dialog-scrollable>
@@ -107,18 +107,21 @@
 
       ready: function(){
         let c = `
-function (_array){
-  let array = [].concat(_array);
+function(_array){
+  let array = _array.clone();
   let result = [];
+  result.push(array.clone());
 
-  result.push([].concat(array));
-  for(let i = 0; i < array.length; i++){
-    for(let j = 0; j < array.length - 1; j++){
-      if(array[j + 1] < array[j]){
-        [array[j + 1], array[j]] = [array[j], array[j + 1]];
+  for(let i = 1; i < array.length; i++){
+    let t = array[i];
+    if(array[i - 1] > t){
+      let j;
+      for(j = i; j > 0 && array[j - 1] > t; j--){
+        array[j] = array[j - 1];
       }
+      array[j] = t;
     }
-    result.push([].concat(array));
+    result.push(array.clone());
   }
 
   return result;
