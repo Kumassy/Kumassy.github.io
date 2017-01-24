@@ -3909,7 +3909,7 @@ Jfr:"𝔍",jfr:"𝔧",jmath:"ȷ",Jopf:"𝕁",jopf:"𝕛",Jscr:"𝒥",jscr:"𝒿"
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
 
-        for(let i = 0; i < indexList.length - 1; i++){
+        for(let i = 0; i < indexList.length; i++){
           ctx.beginPath();
           ctx.moveTo(12 + 2, (24 + 8) * indexList[i][0] + 16);
           for(let w = 1; w < indexList[i].length; w++){
@@ -4389,7 +4389,7 @@ function(_array){
           </div>
         </div>
 
-        <prism-js language="javascript" linenumbers="true" input-value="[[_selectedSortMethod.code]]">
+        <prism-js id="prism" language="javascript" linenumbers="true" input-value="[[_selectedSortMethod.code]]">
         </prism-js>
       </app-header-layout>
 
@@ -4466,6 +4466,7 @@ function(_array){
         },
         _selectedSortMethod: {
           type: Object,
+          value: {}
         },
         // _newSortMethod: {
         //   type: Object,
@@ -4474,8 +4475,55 @@ function(_array){
       },
 
       ready: function(){
-        this.sortMethod = [{
-          identifier: 'insertionSort',
+        this.sortMethod = [
+        {
+          identifier: 'bubble',
+          name: "バブルソート",
+          valid: true,
+          code:
+function(_array){
+  let array = _array.clone();
+  let result = [];
+
+  result.push(array.clone());
+  for(let i = 0; i < array.length; i++){
+    for(let j = array.length - 1; j > i; j--){
+      if(array[j] < array[j - 1]){
+        [array[j], array[j - 1]] = [array[j - 1], array[j]];
+      }
+    }
+    result.push(array.clone());
+  }
+
+  return result;
+},
+        },
+        {
+          identifier: 'selection',
+          name: "選択ソート",
+          valid: true,
+          code:
+function(_array){
+  let array = _array.clone();
+  let result = [];
+
+  result.push(array.clone());
+  for(let i = 0; i < array.length - 1; i++){
+    let minpos = i;
+    for(let j = i + 1; j < array.length; j++){
+      if(array[j] < array[minpos]){
+        minpos = j;
+      }
+    }
+    [array[i], array[minpos]] = [array[minpos], array[i]];
+    result.push(array.clone());
+  }
+
+  return result;
+},
+        },
+        {
+          identifier: 'insertion',
           name: "挿入ソート",
           valid: true, // コードが valid かどうか
           code:
@@ -4486,14 +4534,11 @@ function(_array){
 
   for(let i = 1; i < array.length; i++){
     let t = array[i];
-    if(array[i - 1] > t){
-      let j;
-      for(j = i; j > 0 && array[j - 1] > t; j--){
-        array[j] = array[j - 1];
-        // result.push(array.clone());
-      }
-      array[j] = t;
+    let j;
+    for(j = i; j > 0 && array[j - 1] > t; j--){
+      array[j] = array[j - 1];
     }
+    array[j] = t;
     result.push(array.clone());
   }
 
@@ -4501,29 +4546,42 @@ function(_array){
 },
         },
         {
-          identifier: 'bubbleSort',
-          name: "バブルソート",
-          valid: true,
+          identifier: 'shell',
+          name: "シェルソート",
+          valid: true, // コードが valid かどうか
           code:
 function(_array){
   let array = _array.clone();
   let result = [];
-
   result.push(array.clone());
-  for(let i = 0; i < array.length; i++){
-    for(let j = 0; j < array.length - 1; j++){
-      if(array[j + 1] < array[j]){
-        [array[j + 1], array[j]] = [array[j], array[j + 1]];
-      }
-    }
-    result.push(array.clone());
+
+  let h = 1;
+  while(h < array.length - 1){
+    h = h * 3 + 1;
   }
 
+  while(h > 1){
+    h = Math.floor(h / 3);
+    for(let i = h; i < array.length; i++){
+      let w = array[i];
+      let j = i - h;
+      while(w < array[j]){
+        array[j + h] = array[j];
+        j = j - h;
+
+        if(j < 0){
+          break;
+        }
+      }
+      array[j + h] = w;
+      result.push(array.clone());
+    }
+  }
   return result;
 },
         },
         {
-          identifier: 'quickSort',
+          identifier: 'quick',
           name: "クイックソート",
           valid: true,
           code:
@@ -4624,7 +4682,107 @@ function(_array){
 
   return result;
 },
-        }];
+        },
+        {
+          identifier: 'heap',
+          name: "ヒープソート",
+          valid: true, // コードが valid かどうか
+          code:
+function(_array){
+  let array = _array.clone();
+  let result = [];
+  result.push(array.clone());
+
+
+  let downheap = function(k, r){
+    let v = array[k];
+    while(1){
+      let left = 2 * k + 1;
+      let right = 2 * k + 2;
+      let larger = left;
+
+      if(left > r){
+        break;
+      }
+      if(left != r){
+        if(array[right] > array[left]){
+          larger = right;
+        }
+      }
+      if(v >= array[larger]){
+        break;
+      }
+      array[k] = array[larger];
+      k = larger;
+    }
+    array[k] = v;
+  }
+
+  for(let i = Math.floor(array.length / 2); i >= 0; i--){
+    downheap(i, array.length - 1);
+  }
+  for(let i = array.length - 1; i >= 1; i--){
+    [array[0], array[i]] = [array[i], array[0]];
+    result.push(array.clone());
+    downheap(0, i - 1);
+  }
+
+  result.push(array.clone());
+  return result;
+},
+        },
+        {
+          identifier: 'merge',
+          name: "マージソート",
+          valid: true, // コードが valid かどうか
+          code:
+function(_array){
+  let array = _array.clone();
+  let result = [];
+  result.push(array.clone());
+
+  let mergeseqs = function(size, a){
+    let start = 0;
+    let c = [];
+    while(start < a.length){
+      let i = start;
+      let j = start + size;
+      let k = start;
+
+      let iend = Math.min(start + size - 1, a.length - 1);
+      let jend = Math.min(start + 2 * size - 1, a.length - 1);
+      while(i <= iend && j <= jend){
+        if(a[i] <= a[j]){
+          c[k++] = a[i++];
+        }
+        else{
+          c[k++] = a[j++];
+        }
+      }
+      while(i <= iend){
+        c[k++] = a[i++];
+      }
+      while(j <= jend){
+        c[k++] = a[j++];
+      }
+      start = start + 2 * size;
+    }
+    return c;
+  }
+
+  let seqsize = 1;
+  while(seqsize < array.length){
+    array = mergeseqs(seqsize, array);
+    seqsize = seqsize * 2;
+    result.push(array.clone());
+  }
+
+
+  result.push(array.clone());
+  return result;
+},
+        },
+        ];
         this.notifyPath('sortMethod');
 
 
@@ -4635,6 +4793,9 @@ function(_array){
 
 
         this.set('_selectedSortMethod', this.sortMethod[0]);
+        setTimeout(()=>{
+          this.$.prism.inputValueChanged(this.sortMethod[0].code.toString());
+        }, 20);
         this._executeSort();
       },
 
@@ -4671,6 +4832,17 @@ function(_array){
         let seed = this.initialValue;
         let sortFunc = this._selectedSortMethod.code;
 
+        let tryDrawerClosePromise = new Promise((resolve, reject) => {
+          if(this.$.drawerLayout.narrow){
+            this.$.drawerLayout.drawer.close();
+
+            // wait until animation finished
+            setTimeout(resolve, 250);
+          }
+          else{
+            setTimeout(resolve, 0);
+          }
+        });
         let waitPromise = new Promise((resolve, reject) => {
           setTimeout(resolve, 100);
         });
@@ -4680,9 +4852,11 @@ function(_array){
 
         this.$.sortStatusDialog.open();
 
-        Promise.all([sortPromise, waitPromise]).then((values) => {
-          this.set('array', values[0]);
-          this.$.sortStatusDialog.close();
+        tryDrawerClosePromise.then(() => {
+          return Promise.all([sortPromise, waitPromise]).then((values) => {
+            this.set('array', values[0]);
+            this.$.sortStatusDialog.close();
+          });
         });
 
       },
