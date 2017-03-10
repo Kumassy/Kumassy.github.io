@@ -29,7 +29,7 @@
 
 
 /* eslint-disable quotes, comma-spacing */
-var PrecacheConfig = [["/index.html","548995897fbdab5e80ed579cdee14ef9"],["/src/app-shell/app-shell.html","4f1f9c9260af7212d5fe41db2daa3acf"],["/src/life-app/life-app.html","0bacfe99a08b1552a5807892b3dab191"],["/src/life-canvas/life-canvas.html","e7b152caa2e323e869b6777e84ef5834"]];
+var PrecacheConfig = [["/index.html","cd87362d7aeb7a6042a78dcb66a5d8dc"],["/src/app-shell/app-shell.html","2f65075827aed57a255c0d1bff8b3807"],["/src/life-app/life-app.html","108d88f3ef6434c5207d50a1abc288a5"],["/src/life-canvas/life-canvas.html","4de66558107b19d00a0824642cdd1fee"]];
 /* eslint-enable quotes, comma-spacing */
 var CacheNamePrefix = 'sw-precache-v1--' + (self.registration ? self.registration.scope : '') + '-';
 
