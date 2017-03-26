@@ -14,6 +14,25 @@
 
       <h2>Settings</h2>
       <paper-dialog-scrollable>
+        <template is="dom-if" if="[[!signedIn]]">
+          <h3>Sign In</h3>
+          <paper-button on-tap="signIn" disabled="[[disabled]]" class="account">
+            <iron-icon icon="account-circle"></iron-icon>
+            <span>Sign in with Google</span>
+          </paper-button>
+        </template>
+        <template is="dom-if" if="[[signedIn]]">
+          <h3>Sign Out</h3>
+          <div>
+            You are currently signed in as:<br>
+            [[user.displayName]]([[user.email]])
+          </div>
+          <paper-button on-tap="signOut" class="account">
+            <iron-icon icon="account-circle"></iron-icon>
+            <span>Sign out</span>
+          </paper-button>
+        </template>
+
         <h3>Canvas Size</h3>
         <paper-input label="Cell width" value="{{app.width}}" type="number" max="3000"></paper-input>
         <paper-input label="Cell height" value="{{app.height}}" type="number" max="3000"></paper-input>
@@ -57,8 +76,12 @@
       --paper-slider-knob-color: var(--paper-light-blue-500);
       --paper-slider-active-color: var(--paper-light-blue-500);
     }
+    paper-button.account {
+      vertical-align: middle;
+      text-transform: none;
+    }
   </style>
 
-  <script>Polymer({is:"life-settings-dialog",properties:{app:{type:Object},cellRed:{type:Number,value:255},cellGreen:{type:Number,value:0},cellBlue:{type:Number,value:0},bgRed:{type:Number,value:238},bgGreen:{type:Number,value:238},bgBlue:{type:Number,value:238}},observers:["_handleCellColorChanged(cellRed, cellGreen, cellBlue)","_handleBGColorChanged(bgRed, bgGreen, bgBlue)"],_handleCellColorChanged:function(e,l,r){this.set("app.cellColor","rgb("+e+", "+l+", "+r+")"),this.set("app.overlayColor","rgba("+e+", "+l+", "+r+", 0.3)")},_handleBGColorChanged:function(e,l,r){this.set("app.backgroundColor","rgb("+e+", "+l+", "+r+")")},open:function(){this.$.dialog.open()}});</script>
+  <script>Polymer({is:"life-settings-dialog",properties:{app:{type:Object},cellRed:{type:Number,value:255},cellGreen:{type:Number,value:0},cellBlue:{type:Number,value:0},bgRed:{type:Number,value:238},bgGreen:{type:Number,value:238},bgBlue:{type:Number,value:238},disabled:{type:Boolean,value:!1},signedIn:{type:Boolean,value:!1},user:{type:Object}},observers:["_handleCellColorChanged(cellRed, cellGreen, cellBlue)","_handleBGColorChanged(bgRed, bgGreen, bgBlue)"],_handleCellColorChanged:function(e,l,n){this.set("app.cellColor","rgb("+e+", "+l+", "+n+")"),this.set("app.overlayColor","rgba("+e+", "+l+", "+n+", 0.3)")},_handleBGColorChanged:function(e,l,n){this.set("app.backgroundColor","rgb("+e+", "+l+", "+n+")")},open:function(){this.$.dialog.open()},signIn:function(){this.fire("sign-in")},signOut:function(){this.fire("sign-out")}});</script>
 </dom-module>
 </body></html>
