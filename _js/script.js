@@ -65,7 +65,7 @@
   }, false);
 
   insertMessage('Kumassy', "Hello, Kumassy World!");
-  insertMessage('Kumassy', "Put some awesome words in the text field below. Then, click 'send' button (or just press 'Enter' key).");
+  insertMessage('Kumassy', "Put awesome words in the text field below. Then, click the 'send' button (or press the 'Enter' key).");
   insertMessage('Kumassy', "Enjoy chatting with me!");
 
 })();
